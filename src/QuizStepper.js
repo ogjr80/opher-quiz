@@ -8,6 +8,8 @@ function QuizStepper({questions}) {
   const [step, setStep] = useState(0);
   const [responses, setResponses] = useState({});
   const [score, setScore] = useState(null);
+  const [ca, setCorrectAnswer] = useState(0); 
+
 
 
 
@@ -15,6 +17,7 @@ function QuizStepper({questions}) {
     const isCorrect = questions.find(q => q.id === questionId).answer === option;
     setResponses({ ...responses, [questionId]: { answer: option, isCorrect } });
   };
+
 
   const handleSubmit = async () => {
     const correctAnswers = questions.reduce((acc, question) => {
@@ -30,10 +33,11 @@ function QuizStepper({questions}) {
   
     const calculatedScore = (count / questions.length) * 100;
     setScore(calculatedScore);
+    setCorrectAnswer(count)
    
     const results = {
       responses,
-      correctAnswers,
+      correctAnswers: count,
       totalQuestions: questions.length,
       score: calculatedScore
     };
@@ -96,13 +100,13 @@ function QuizStepper({questions}) {
           )}
         </div>
       </form>
-      {/* {score !== null && (
+      {score !== null && (
         <div className="mt-4">
           <p>
-            Your score is {score.toFixed(1)}% ({correctAnswers} out of {questions.length} correct)
+            Your score is {score.toFixed(1)}% ({ca} out of {questions.length} correct)
           </p>
         </div>
-      )} */}
+      )}
     </div>
   );
 }
