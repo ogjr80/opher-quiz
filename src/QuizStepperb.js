@@ -8,36 +8,29 @@ function QuizStepper({questions}) {
   const [step, setStep] = useState(0);
   const [responses, setResponses] = useState({});
   const [score, setScore] = useState(null);
+  const [ca,setCa] = useState(0)
 
-
-
+  
   const handleOptionChange = (questionId, option) => {
     const isCorrect = questions.find(q => q.id === questionId).answer === option;
     setResponses({ ...responses, [questionId]: { answer: option, isCorrect } });
   };
-
-  const handleSubmit = async () => {
-    const correctAnswers = questions.reduce((acc, question) => {
-      return acc + (question.answer === responses[question.id] ? 1 : 0);
-    }, 0);
-    let count=0
-    Object.entries(responses).map(([_,value])=>{
-      if(value.isCorrect) {
-        return count++
-      }
-      
-    })
   
-    const calculatedScore = (count / questions.length) * 100;
+  const handleSubmit = async () => {
+    const correctAnswers = Object.values(responses).reduce((acc, response) => {
+      return acc + (response.isCorrect ? 1 : 0);
+    }, 0);
+  
+    const calculatedScore = (correctAnswers / questions.length) * 100;
     setScore(calculatedScore);
-   
+  
     const results = {
       responses,
       correctAnswers,
       totalQuestions: questions.length,
-      score: calculatedScore
+      score: calculatedScore,
     };
-
+  
     try {
       await addDoc(collection(firestore, 'quizResults'), results);
       alert('Results saved!');
@@ -46,8 +39,11 @@ function QuizStepper({questions}) {
       alert('Failed to save results.');
     }
   };
+  
 
   const currentQuestion = questions[step];
+  console.log(responses); 
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-semibold mb-4">Quiz: WebSockets</h1>
@@ -56,12 +52,13 @@ function QuizStepper({questions}) {
         {Object.entries(currentQuestion.options).map(([key, value]) => (
           <div key={key} className="mb-2">
             <input
+              
               type="radio"
               id={`${currentQuestion.id}-${key}`}
               name={`question-${currentQuestion.id}`}
               value={key}
-             // checked={responses[currentQuestion.id] === key}
-              onChange={() => handleOptionChange(currentQuestion.id, value)}
+              checked={responses[currentQuestion.id] === key}
+              onChange={() => handleOptionChange(currentQuestion.id, key)}
               className="mr-2"
             />
             <label htmlFor={`${currentQuestion.id}-${key}`}>{value}</label>
@@ -81,30 +78,32 @@ function QuizStepper({questions}) {
             <button
               type="button"
               onClick={() => setStep(step + 1)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r"
-            >
-              Submit
-            </button>
-          )}
-        </div>
-      </form>
-      {/* {score !== null && (
-        <div className="mt-4">
-          <p>
-            Your score is {score.toFixed(1)}% ({correctAnswers} out of {questions.length} correct)
-          </p>
-        </div>
-      )} */}
-    </div>
-  );
-}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
+              >
+                Next
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r"
+              >
+                Submit
+              </button>
+            )}
+          </div>
+        </form>
 
-export default QuizStepper
+        {score !== null && (
+          <div className="mt-4">
+            <p>
+              Your score is {score.toFixed(1)}% ({ca} out of {questions.length} correct)
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  }
+  
+  export default QuizStepper;
+  
