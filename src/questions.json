@@ -1,0 +1,110 @@
+{
+    "questions": [
+    {
+    "id": 1,
+    "question": "What is the primary purpose of a Web Worker in a web application?",
+    "options": [
+    "To perform background tasks without blocking the main thread",
+    "To enable real-time communication between browsers",
+    "To store data locally for offline use",
+    "To draw graphics on the web"
+    ],
+    "answer": "To perform background tasks without blocking the main thread"
+    },
+    {
+    "id": 2,
+    "question": "How do you create a new Web Worker instance in JavaScript?",
+    "options": [
+    "new Worker('worker.js')",
+    "new WebWorker('worker.js')",
+    "Worker.create('worker.js')",
+    "WebWorker.create('worker.js')"
+    ],
+    "answer": "new Worker('worker.js')"
+    },
+    {
+    "id": 3,
+    "question": "Which of the following methods is used to send a message from the main thread to a Web Worker?",
+    "options": [
+    "postMessage()",
+    "sendMessage()",
+    "send()",
+    "message()"
+    ],
+    "answer": "postMessage()"
+    },
+    {
+    "id": 4,
+    "question": "How can a Web Worker communicate with the main thread?",
+    "options": [
+    "By using the postMessage() method and listening for the 'message' event",
+    "By directly modifying the DOM",
+    "By using the XMLHttpRequest API",
+    "By using the Fetch API"
+    ],
+    "answer": "By using the postMessage() method and listening for the 'message' event"
+    },
+    {
+    "id": 5,
+    "question": "What is the main limitation of Web Workers regarding the DOM?",
+    "options": [
+    "Web Workers cannot directly access or modify the DOM",
+    "Web Workers can only access a limited subset of the DOM",
+    "Web Workers can only modify the DOM if the main thread is idle",
+    "Web Workers can only access the DOM in read-only mode"
+    ],
+    "answer": "Web Workers cannot directly access or modify the DOM"
+    },
+    {
+    "id": 6,
+    "question": "Which of the following APIs can be used inside a Web Worker?",
+    "options": [
+    "XMLHttpRequest",
+    "Fetch API",
+    "Both A and B",
+    "Neither A nor B"
+    ],
+    "answer": "Both A and B"
+    },
+    {
+    "id": 7,
+    "question": "Can Web Workers use the 'window' object?",
+    "options": [
+    "Yes",
+    "No"
+    ],
+    "answer": "No"
+    },
+    {
+    "id": 8,
+    "question": "Which object is used inside a Web Worker to represent the global context?",
+    "options": [
+    "self",
+    "worker",
+    "global",
+    "window"
+    ],
+    "answer": "self"
+    },
+    {
+    "id": 9,
+    "question": "How do you terminate a Web Worker from the main thread?",
+    "options": [
+    "worker.terminate()",
+    "worker.stop()",
+    "worker.kill()",
+    "worker.close()"
+    ],
+    "answer": "worker.terminate()"
+    },
+    {
+    "id": 10,
+    "question": "Can a Web Worker create and manage other Web Workers?",
+    "options": [
+    "Yes",
+    "No"
+    ],
+    "answer": "No"
+    }
+    ]
+    }
